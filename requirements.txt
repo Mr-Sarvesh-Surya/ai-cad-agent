@@ -1,0 +1,11 @@
+ipykernel
+numpy
+pandas
+pyvista
+cadquery
+cadquery[ipython]
+panel
+ipywidgets
+trimesh
+meshio
+CQ-editor
