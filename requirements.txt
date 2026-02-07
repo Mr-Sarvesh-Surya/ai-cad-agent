@@ -9,3 +9,6 @@ ipywidgets
 trimesh
 meshio
 CQ-editor
+jupyter-cadquery
+ocp_vscode
+cq-gears
