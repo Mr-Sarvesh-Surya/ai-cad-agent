@@ -2,13 +2,11 @@ ipykernel
 numpy
 pandas
 pyvista
-cadquery
-cadquery[ipython]
+build123d
 panel
 ipywidgets
 trimesh
 meshio
-CQ-editor
+ocp-vscode
+jupyterlab
 jupyter-cadquery
-ocp_vscode
-cq-gears
