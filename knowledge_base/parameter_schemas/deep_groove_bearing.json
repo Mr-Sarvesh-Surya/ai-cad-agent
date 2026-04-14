@@ -1,0 +1,160 @@
+{
+  "component_type": "deep_groove_bearing",
+  "schema_version": "1.0",
+  "standards_family": ["ISO_15", "ISO_281"],
+  "description": "Single-row deep groove ball bearing (6000 series / standard)",
+  "parameters": [
+    {
+      "name": "bore_diameter",
+      "required": true,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": 3.0,
+      "max_value": 320.0,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": [],
+      "standard_reference": "ISO_15",
+      "description": "Inner race bore"
+    },
+    {
+      "name": "outer_diameter",
+      "required": true,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": [],
+      "standard_reference": "ISO_15",
+      "description": "Outer race diameter"
+    },
+    {
+      "name": "width",
+      "required": true,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": [],
+      "standard_reference": "ISO_15",
+      "description": "Bearing width"
+    },
+    {
+      "name": "dynamic_load_rating",
+      "required": false,
+      "data_type": "float",
+      "unit": "kN",
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": [],
+      "standard_reference": "ISO_281",
+      "description": "Dynamic load rating C"
+    },
+    {
+      "name": "static_load_rating",
+      "required": false,
+      "data_type": "float",
+      "unit": "kN",
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": [],
+      "standard_reference": "ISO_281",
+      "description": "Static load rating C0"
+    },
+    {
+      "name": "speed_rating",
+      "required": false,
+      "data_type": "int",
+      "unit": "RPM",
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": [],
+      "standard_reference": "ISO_281",
+      "description": "Maximum speed rating"
+    },
+    {
+      "name": "tolerance_class",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": "P0",
+      "allowed_values": ["P0", "P6", "P5", "P4", "P2"],
+      "depends_on": [],
+      "standard_reference": "ISO_15",
+      "description": "ISO tolerance class"
+    },
+    {
+      "name": "clearance_class",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": "CN",
+      "allowed_values": ["C2", "CN", "C3", "C4"],
+      "depends_on": [],
+      "standard_reference": "ISO_5753",
+      "description": "Radial clearance class"
+    },
+    {
+      "name": "lubrication",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": "grease",
+      "allowed_values": ["grease", "oil"],
+      "depends_on": [],
+      "standard_reference": "ISO_281",
+      "description": "Lubrication type"
+    },
+    {
+      "name": "sealing",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "ask_user",
+      "default_value": "open",
+      "allowed_values": ["open", "one_shield", "two_shields", "one_seal", "two_seals"],
+      "depends_on": [],
+      "standard_reference": "ISO_15",
+      "description": "Shield/seal configuration"
+    }
+  ],
+  "conflict_rules": [
+    {
+      "rule": "bore_larger_than_od",
+      "condition": "bore_diameter >= outer_diameter",
+      "severity": "error",
+      "message": "Bore diameter must be smaller than outer diameter."
+    },
+    {
+      "rule": "width_too_large",
+      "condition": "width > (outer_diameter - bore_diameter) / 2",
+      "severity": "warning",
+      "message": "Bearing width is large relative to cross section. Verify catalog dimensions."
+    }
+  ]
+}

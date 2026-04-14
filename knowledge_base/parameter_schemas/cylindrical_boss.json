@@ -1,0 +1,108 @@
+{
+  "component_type": "cylindrical_boss",
+  "schema_version": "1.0",
+  "standards_family": ["General machining practice"],
+  "description": "Solid cylindrical protrusion from a base surface",
+  "parameters": [
+    {
+      "name": "diameter",
+      "required": true,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": 1.0,
+      "max_value": 500.0,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": [],
+      "standard_reference": "General",
+      "description": "Boss outer diameter"
+    },
+    {
+      "name": "height",
+      "required": true,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": 0.5,
+      "max_value": 500.0,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": [],
+      "standard_reference": "General",
+      "description": "Boss protrusion height"
+    },
+    {
+      "name": "material",
+      "required": true,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "context_hint",
+      "hint_map": {
+        "general_purpose": "Steel_1045",
+        "lightweight": "Aluminum_6061",
+        "plastic": "Nylon_PA66"
+      },
+      "fallback_default": "Steel_1045",
+      "depends_on": [],
+      "standard_reference": "General",
+      "description": "Boss material"
+    },
+    {
+      "name": "chamfer",
+      "required": false,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": 0,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": 0.5,
+      "depends_on": [],
+      "standard_reference": "General",
+      "description": "Top edge chamfer"
+    },
+    {
+      "name": "fillet",
+      "required": false,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": 0,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": 1.0,
+      "depends_on": [],
+      "standard_reference": "General",
+      "description": "Base fillet radius"
+    },
+    {
+      "name": "through_bore",
+      "required": false,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": 0,
+      "max_value": null,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": [],
+      "standard_reference": "General",
+      "description": "Optional central through bore diameter"
+    }
+  ],
+  "conflict_rules": [
+    {
+      "rule": "bore_larger_than_boss",
+      "condition": "through_bore is not None and through_bore >= diameter",
+      "severity": "error",
+      "message": "Through bore diameter must be smaller than boss diameter."
+    },
+    {
+      "rule": "chamfer_too_large",
+      "condition": "chamfer > diameter / 4",
+      "severity": "warning",
+      "message": "Chamfer larger than 25% of boss diameter. Boss face area will be very small."
+    }
+  ]
+}

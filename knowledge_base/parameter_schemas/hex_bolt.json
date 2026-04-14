@@ -1,0 +1,155 @@
+{
+  "component_type": "hex_bolt",
+  "schema_version": "1.0",
+  "standards_family": ["ISO_4014", "ISO_4016", "ISO_898"],
+  "description": "Standard hex head bolt - metric series",
+  "parameters": [
+    {
+      "name": "nominal_diameter",
+      "required": true,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": 1.6,
+      "max_value": 64.0,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": [],
+      "standard_reference": "ISO_261",
+      "description": "Thread nominal diameter"
+    },
+    {
+      "name": "length",
+      "required": true,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": 5.0,
+      "max_value": 300.0,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": [],
+      "standard_reference": "ISO_4014",
+      "description": "Bolt length under head to tip"
+    },
+    {
+      "name": "thread_pitch",
+      "required": false,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": 1.25,
+      "depends_on": ["nominal_diameter"],
+      "standard_reference": "ISO_261",
+      "description": "Coarse pitch default"
+    },
+    {
+      "name": "property_class",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": "8.8",
+      "allowed_values": ["4.6", "4.8", "5.8", "8.8", "10.9", "12.9"],
+      "depends_on": [],
+      "standard_reference": "ISO_898",
+      "description": "Mechanical property class"
+    },
+    {
+      "name": "material",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "context_hint",
+      "hint_map": {
+        "standard": "Low_Carbon_Steel",
+        "high_strength": "Alloy_Steel_B7",
+        "stainless": "SS_A2_70",
+        "corrosion_resistant": "SS_A4_80"
+      },
+      "fallback_default": "Low_Carbon_Steel",
+      "depends_on": [],
+      "standard_reference": "ISO_898",
+      "description": "Bolt material"
+    },
+    {
+      "name": "head_width_across_flats",
+      "required": false,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "formula",
+      "formula": "{1.6: 3.2, 2: 4.0, 2.5: 5.0, 3: 5.5, 4: 7.0, 5: 8.0, 6: 10.0, 8: 13.0, 10: 16.0, 12: 18.0, 14: 21.0, 16: 24.0, 20: 30.0, 24: 36.0, 30: 46.0, 36: 55.0, 42: 65.0, 48: 75.0, 56: 85.0, 64: 95.0}.get(nominal_diameter)",
+      "depends_on": ["nominal_diameter"],
+      "standard_reference": "ISO_4014",
+      "description": "Head width across flats"
+    },
+    {
+      "name": "head_height",
+      "required": false,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "formula",
+      "formula": "{1.6: 1.1, 2: 1.4, 2.5: 1.7, 3: 2.0, 4: 2.8, 5: 3.5, 6: 4.0, 8: 5.3, 10: 6.4, 12: 7.5, 14: 8.8, 16: 10.0, 20: 12.5, 24: 15.0, 30: 18.7, 36: 22.5, 42: 26.0, 48: 30.0, 56: 35.0, 64: 40.0}.get(nominal_diameter)",
+      "depends_on": ["nominal_diameter"],
+      "standard_reference": "ISO_4014",
+      "description": "Head height"
+    },
+    {
+      "name": "washer_face",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": "none",
+      "allowed_values": ["none", "integral"],
+      "depends_on": [],
+      "standard_reference": "ISO_4014",
+      "description": "Washer face style"
+    },
+    {
+      "name": "finish",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": "plain",
+      "allowed_values": ["plain", "zinc_plated", "hot_dip_galvanized", "black_oxide"],
+      "depends_on": [],
+      "standard_reference": "ISO_4042",
+      "description": "Surface finish"
+    }
+  ],
+  "conflict_rules": [
+    {
+      "rule": "length_too_short",
+      "condition": "length < nominal_diameter * 2",
+      "severity": "warning",
+      "message": "Bolt length is less than 2× diameter. Engagement may be insufficient."
+    },
+    {
+      "rule": "non_standard_diameter",
+      "condition": "nominal_diameter not in [1.6,2,2.5,3,4,5,6,8,10,12,14,16,20,24,30,36,42,48,56,64]",
+      "severity": "warning",
+      "message": "Non-standard nominal diameter. Verify availability in preferred ISO series."
+    }
+  ]
+}

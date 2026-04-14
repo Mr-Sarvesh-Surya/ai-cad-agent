@@ -1,0 +1,148 @@
+{
+  "component_type": "stepped_shaft",
+  "schema_version": "1.0",
+  "standards_family": ["ISO_286", "DIN_743"],
+  "description": "Shaft with multiple diameter steps, each with its own length",
+  "parameters": [
+    {
+      "name": "steps",
+      "required": true,
+      "data_type": "int",
+      "unit": null,
+      "min_value": 2,
+      "max_value": 10,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": [],
+      "standard_reference": "DIN_743",
+      "description": "Number of shaft diameter steps"
+    },
+    {
+      "name": "diameters",
+      "required": true,
+      "data_type": "string",
+      "unit": "mm",
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": ["steps"],
+      "standard_reference": "DIN_743",
+      "description": "Comma-separated step diameters from largest to smallest"
+    },
+    {
+      "name": "lengths",
+      "required": true,
+      "data_type": "string",
+      "unit": "mm",
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": ["steps"],
+      "standard_reference": "DIN_743",
+      "description": "Comma-separated step lengths"
+    },
+    {
+      "name": "material",
+      "required": true,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "context_hint",
+      "hint_map": {
+        "general_purpose": "Steel_1045",
+        "high_performance": "Steel_4140_HT",
+        "corrosion_resistant": "SS_316"
+      },
+      "fallback_default": "Steel_1045",
+      "depends_on": [],
+      "standard_reference": "DIN_743",
+      "description": "Shaft material"
+    },
+    {
+      "name": "fillet_radius",
+      "required": false,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": 0.5,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": 1.0,
+      "depends_on": [],
+      "standard_reference": "DIN_743",
+      "description": "Fillet radius at each shoulder"
+    },
+    {
+      "name": "tolerance_class",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": "h6",
+      "depends_on": [],
+      "standard_reference": "ISO_286",
+      "description": "Applied tolerance class"
+    },
+    {
+      "name": "surface_finish_ra",
+      "required": false,
+      "data_type": "float",
+      "unit": "um",
+      "min_value": 0.1,
+      "max_value": 25.0,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": 1.6,
+      "depends_on": [],
+      "standard_reference": "ISO_1302",
+      "description": "Surface roughness Ra"
+    },
+    {
+      "name": "chamfer",
+      "required": false,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": 0,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": 1.0,
+      "depends_on": [],
+      "standard_reference": "General",
+      "description": "Chamfer on free ends"
+    }
+  ],
+  "conflict_rules": [
+    {
+      "rule": "steps_count_mismatch",
+      "condition": "len(diameters.split(',')) != steps",
+      "severity": "error",
+      "message": "Number of diameters does not match steps count."
+    },
+    {
+      "rule": "lengths_count_mismatch",
+      "condition": "len(lengths.split(',')) != steps",
+      "severity": "error",
+      "message": "Number of lengths does not match steps count."
+    },
+    {
+      "rule": "diameters_not_decreasing",
+      "condition": "any(float(diameters.split(',')[i].strip()) >= float(diameters.split(',')[i-1].strip()) for i in range(1, len(diameters.split(','))))",
+      "severity": "warning",
+      "message": "Diameters should generally decrease from left to right for standard shaft design."
+    },
+    {
+      "rule": "fillet_too_small",
+      "condition": "fillet_radius < 0.5",
+      "severity": "warning",
+      "message": "Fillet radius below 0.5mm causes high stress concentration at shoulders."
+    }
+  ]
+}

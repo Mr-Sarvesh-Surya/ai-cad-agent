@@ -1,0 +1,171 @@
+{
+  "component_type": "cylindrical_shaft",
+  "schema_version": "1.0",
+  "standards_family": ["ISO_286", "DIN_743"],
+  "description": "Solid cylindrical shaft, uniform diameter, with optional features",
+  "parameters": [
+    {
+      "name": "diameter",
+      "required": true,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": 1.0,
+      "max_value": 1000.0,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": [],
+      "standard_reference": "DIN_743",
+      "description": "Shaft outer diameter"
+    },
+    {
+      "name": "length",
+      "required": true,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": 1.0,
+      "max_value": 10000.0,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": [],
+      "standard_reference": "DIN_743",
+      "description": "Total shaft length"
+    },
+    {
+      "name": "material",
+      "required": true,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "context_hint",
+      "hint_map": {
+        "general_purpose": "Steel_1045",
+        "high_performance": "Steel_4140_HT",
+        "corrosion_resistant": "SS_316",
+        "lightweight": "Aluminum_6061"
+      },
+      "fallback_default": "Steel_1045",
+      "depends_on": [],
+      "standard_reference": "DIN_743",
+      "description": "Shaft material"
+    },
+    {
+      "name": "tolerance_class",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": "h6",
+      "depends_on": [],
+      "standard_reference": "ISO_286",
+      "description": "ISO 286 shaft tolerance"
+    },
+    {
+      "name": "surface_finish_ra",
+      "required": false,
+      "data_type": "float",
+      "unit": "um",
+      "min_value": 0.1,
+      "max_value": 25.0,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": 1.6,
+      "depends_on": [],
+      "standard_reference": "ISO_1302",
+      "description": "Surface roughness Ra"
+    },
+    {
+      "name": "chamfer",
+      "required": false,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": 0,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": 1.0,
+      "depends_on": [],
+      "standard_reference": "General",
+      "description": "End chamfer"
+    },
+    {
+      "name": "keyway",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "allowed_values": ["none", "square", "woodruff"],
+      "depends_on": [],
+      "standard_reference": "DIN_6885",
+      "description": "Optional keyway type"
+    },
+    {
+      "name": "keyway_width",
+      "required": false,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": ["keyway"],
+      "standard_reference": "DIN_6885",
+      "description": "Keyway width"
+    },
+    {
+      "name": "keyway_depth",
+      "required": false,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "formula",
+      "formula": "0.5 * keyway_width",
+      "depends_on": ["keyway_width"],
+      "standard_reference": "DIN_6885",
+      "description": "Keyway depth"
+    },
+    {
+      "name": "center_drill",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": "A2",
+      "depends_on": [],
+      "standard_reference": "DIN_332",
+      "description": "Center drill type for lathe mounting"
+    }
+  ],
+  "conflict_rules": [
+    {
+      "rule": "slenderness_ratio",
+      "condition": "length / diameter > 20",
+      "severity": "warning",
+      "message": "L/D ratio exceeds 20. Shaft may deflect under load. Consider intermediate bearing support."
+    },
+    {
+      "rule": "keyway_without_width",
+      "condition": "keyway != 'none' and keyway_width is None",
+      "severity": "error",
+      "message": "Keyway specified without width. keyway_width is required when keyway is not none."
+    },
+    {
+      "rule": "diameter_too_small_for_keyway",
+      "condition": "keyway != 'none' and diameter < 6.0",
+      "severity": "error",
+      "message": "Diameter too small for standard keyway. Minimum shaft diameter for keyway is 6mm."
+    }
+  ]
+}

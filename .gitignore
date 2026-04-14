@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+.env
+
+# Logs
+*.log
+
+# CAD files (generated output)
+*.stl
+*.step
+*.stp
+
+# Output folders
+outputs/
+generated_models/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+
+#agents files
+agent.md
+knowledge_base.md

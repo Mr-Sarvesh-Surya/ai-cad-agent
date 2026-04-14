@@ -1,0 +1,130 @@
+{
+  "registry_version": "1.0",
+  "last_updated": "2025-01-01",
+  "description": "Master registry of all CAD primitives buildable by the template engine",
+  "primitives": [
+    {
+      "id": "spur_gear_involute",
+      "component_type": "spur_gear",
+      "description": "External involute spur gear with hub and central bore",
+      "required_params": ["module", "teeth", "pressure_angle", "face_width", "bore_diameter", "material"],
+      "optional_params": ["pitch_diameter", "base_diameter", "addendum", "dedendum", "outer_diameter", "root_diameter", "hub_diameter", "hub_length", "keyway", "chamfer", "quality_grade"],
+      "output_format": "STEP",
+      "build123d_template_file": "templates/spur_gear.py",
+      "estimated_build_time_seconds": 8
+    },
+    {
+      "id": "helical_gear_involute",
+      "component_type": "helical_gear",
+      "description": "External involute helical gear with hub and central bore",
+      "required_params": ["module", "teeth", "pressure_angle", "face_width", "bore_diameter", "material", "helix_angle", "hand"],
+      "optional_params": ["pitch_diameter", "base_diameter", "addendum", "dedendum", "outer_diameter", "root_diameter", "hub_diameter", "hub_length", "keyway", "chamfer", "quality_grade", "normal_module", "normal_pressure_angle", "axial_pitch", "lead"],
+      "output_format": "STEP",
+      "build123d_template_file": "templates/helical_gear.py",
+      "estimated_build_time_seconds": 10
+    },
+    {
+      "id": "cylindrical_shaft",
+      "component_type": "cylindrical_shaft",
+      "description": "Solid cylindrical shaft, uniform diameter, with optional features",
+      "required_params": ["diameter", "length", "material"],
+      "optional_params": ["tolerance_class", "surface_finish_ra", "chamfer", "keyway", "keyway_width", "keyway_depth", "center_drill"],
+      "output_format": "STEP",
+      "build123d_template_file": "templates/cylindrical_shaft.py",
+      "estimated_build_time_seconds": 3
+    },
+    {
+      "id": "stepped_shaft",
+      "component_type": "stepped_shaft",
+      "description": "Shaft with multiple diameter steps, each with its own length",
+      "required_params": ["steps", "diameters", "lengths", "material"],
+      "optional_params": ["fillet_radius", "tolerance_class", "surface_finish_ra", "chamfer"],
+      "output_format": "STEP",
+      "build123d_template_file": "templates/stepped_shaft.py",
+      "estimated_build_time_seconds": 5
+    },
+    {
+      "id": "deep_groove_bearing",
+      "component_type": "deep_groove_bearing",
+      "description": "Single-row deep groove ball bearing (6000 series / standard)",
+      "required_params": ["bore_diameter", "outer_diameter", "width"],
+      "optional_params": ["dynamic_load_rating", "static_load_rating", "speed_rating", "tolerance_class", "clearance_class", "lubrication", "sealing"],
+      "output_format": "STEP",
+      "build123d_template_file": "templates/deep_groove_bearing.py",
+      "estimated_build_time_seconds": 4
+    },
+    {
+      "id": "flanged_bearing",
+      "component_type": "flanged_bearing",
+      "description": "Deep groove ball bearing with integral mounting flange",
+      "required_params": ["bore_diameter", "outer_diameter", "width", "flange_outer_diameter", "flange_thickness"],
+      "optional_params": ["dynamic_load_rating", "static_load_rating", "speed_rating", "tolerance_class", "clearance_class", "lubrication", "sealing", "bolt_circle_diameter", "number_of_bolts", "bolt_hole_diameter", "flange_material"],
+      "output_format": "STEP",
+      "build123d_template_file": "templates/flanged_bearing.py",
+      "estimated_build_time_seconds": 5
+    },
+    {
+      "id": "cylindrical_boss",
+      "component_type": "cylindrical_boss",
+      "description": "Solid cylindrical protrusion from a base surface",
+      "required_params": ["diameter", "height", "material"],
+      "optional_params": ["chamfer", "fillet", "through_bore"],
+      "output_format": "STEP",
+      "build123d_template_file": "templates/cylindrical_boss.py",
+      "estimated_build_time_seconds": 2
+    },
+    {
+      "id": "through_hole",
+      "component_type": "through_hole",
+      "description": "Cylindrical through hole with tolerance and finish specification",
+      "required_params": ["diameter", "depth"],
+      "optional_params": ["tolerance_class", "surface_finish_ra", "chamfer", "thread", "countersink_angle", "counterbore_diameter", "counterbore_depth"],
+      "output_format": "STEP",
+      "build123d_template_file": "templates/through_hole.py",
+      "estimated_build_time_seconds": 2
+    },
+    {
+      "id": "hex_bolt",
+      "component_type": "hex_bolt",
+      "description": "Standard hex head bolt - metric series",
+      "required_params": ["nominal_diameter", "length"],
+      "optional_params": ["thread_pitch", "property_class", "material", "head_width_across_flats", "head_height", "washer_face", "finish"],
+      "output_format": "STEP",
+      "build123d_template_file": "templates/hex_bolt.py",
+      "estimated_build_time_seconds": 3
+    },
+    {
+      "id": "hex_nut",
+      "component_type": "hex_nut",
+      "description": "Standard hex nut - metric series",
+      "required_params": ["nominal_diameter"],
+      "optional_params": ["thread_pitch", "property_class", "nut_style", "material", "width_across_flats", "nut_height", "finish"],
+      "output_format": "STEP",
+      "build123d_template_file": "templates/hex_nut.py",
+      "estimated_build_time_seconds": 2
+    },
+    {
+      "id": "cylindrical_pin",
+      "component_type": "cylindrical_pin",
+      "description": "Solid cylindrical dowel or alignment pin",
+      "required_params": ["diameter", "length"],
+      "optional_params": ["pin_type", "tolerance_class", "material", "surface_finish_ra", "chamfer", "end_style"],
+      "output_format": "STEP",
+      "build123d_template_file": "templates/cylindrical_pin.py",
+      "estimated_build_time_seconds": 1
+    }
+  ],
+  "primitive_ids": [
+    "spur_gear_involute",
+    "helical_gear_involute",
+    "cylindrical_shaft",
+    "stepped_shaft",
+    "deep_groove_bearing",
+    "flanged_bearing",
+    "cylindrical_boss",
+    "through_hole",
+    "hex_bolt",
+    "hex_nut",
+    "cylindrical_pin"
+  ]
+}

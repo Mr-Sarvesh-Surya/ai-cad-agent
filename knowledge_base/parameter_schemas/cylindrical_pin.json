@@ -1,0 +1,136 @@
+{
+  "component_type": "cylindrical_pin",
+  "schema_version": "1.0",
+  "standards_family": ["ISO_8734", "ISO_2338"],
+  "description": "Solid cylindrical dowel or alignment pin",
+  "parameters": [
+    {
+      "name": "diameter",
+      "required": true,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": 0.6,
+      "max_value": 50.0,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": [],
+      "standard_reference": "ISO_8734",
+      "description": "Pin diameter"
+    },
+    {
+      "name": "length",
+      "required": true,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": 2.0,
+      "max_value": 200.0,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": [],
+      "standard_reference": "ISO_8734",
+      "description": "Pin total length"
+    },
+    {
+      "name": "pin_type",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": "dowel",
+      "allowed_values": ["dowel", "taper", "spring", "clevis"],
+      "depends_on": [],
+      "standard_reference": "ISO_8734",
+      "description": "Pin type"
+    },
+    {
+      "name": "tolerance_class",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": "m6",
+      "allowed_values": ["m6", "h8", "f7"],
+      "depends_on": [],
+      "standard_reference": "ISO_286",
+      "description": "Tolerance class"
+    },
+    {
+      "name": "material",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": "Steel_hardened",
+      "allowed_values": ["Steel_hardened", "SS_316", "Alloy_Steel"],
+      "depends_on": [],
+      "standard_reference": "ISO_8734",
+      "description": "Pin material"
+    },
+    {
+      "name": "surface_finish_ra",
+      "required": false,
+      "data_type": "float",
+      "unit": "um",
+      "min_value": 0.1,
+      "max_value": 1.6,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": 0.4,
+      "depends_on": [],
+      "standard_reference": "ISO_1302",
+      "description": "Surface roughness Ra"
+    },
+    {
+      "name": "chamfer",
+      "required": false,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": 0,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": 0.3,
+      "depends_on": [],
+      "standard_reference": "General",
+      "description": "Insertion chamfer"
+    },
+    {
+      "name": "end_style",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": "flat",
+      "allowed_values": ["flat", "rounded", "crowned"],
+      "depends_on": [],
+      "standard_reference": "ISO_8734",
+      "description": "Pin end style"
+    }
+  ],
+  "conflict_rules": [
+    {
+      "rule": "length_to_diameter_ratio",
+      "condition": "length / diameter > 10",
+      "severity": "warning",
+      "message": "Pin L/D ratio exceeds 10. Risk of buckling under axial load."
+    },
+    {
+      "rule": "diameter_non_standard",
+      "condition": "diameter not in [0.6,0.8,1,1.2,1.5,2,2.5,3,4,5,6,8,10,12,16,20,25,30,40,50]",
+      "severity": "warning",
+      "message": "Non-standard diameter. Verify availability in ISO 8734 preferred series."
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "component_type": "hex_nut",
+  "schema_version": "1.0",
+  "standards_family": ["ISO_4032", "ISO_898_2"],
+  "description": "Standard hex nut - metric series",
+  "parameters": [
+    {
+      "name": "nominal_diameter",
+      "required": true,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": 1.6,
+      "max_value": 64.0,
+      "default_resolvable": false,
+      "resolution_method": "ask_user",
+      "depends_on": [],
+      "standard_reference": "ISO_261",
+      "description": "Thread nominal diameter"
+    },
+    {
+      "name": "thread_pitch",
+      "required": false,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": 1.25,
+      "depends_on": ["nominal_diameter"],
+      "standard_reference": "ISO_261",
+      "description": "Coarse thread pitch"
+    },
+    {
+      "name": "property_class",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": "8",
+      "allowed_values": ["4", "5", "6", "8", "10", "12"],
+      "depends_on": [],
+      "standard_reference": "ISO_898_2",
+      "description": "Nut property class"
+    },
+    {
+      "name": "nut_style",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": "regular",
+      "allowed_values": ["regular", "thin", "thick", "nyloc", "castle"],
+      "depends_on": [],
+      "standard_reference": "ISO_4032",
+      "description": "Nut style"
+    },
+    {
+      "name": "material",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "context_hint",
+      "hint_map": {
+        "standard": "Low_Carbon_Steel",
+        "high_strength": "Alloy_Steel",
+        "stainless": "SS_A2_70"
+      },
+      "fallback_default": "Low_Carbon_Steel",
+      "depends_on": [],
+      "standard_reference": "ISO_898_2",
+      "description": "Nut material"
+    },
+    {
+      "name": "width_across_flats",
+      "required": false,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "formula",
+      "formula": "{1.6: 3.2, 2: 4.0, 2.5: 5.0, 3: 5.5, 4: 7.0, 5: 8.0, 6: 10.0, 8: 13.0, 10: 16.0, 12: 18.0, 14: 21.0, 16: 24.0, 20: 30.0, 24: 36.0, 30: 46.0, 36: 55.0, 42: 65.0, 48: 75.0, 56: 85.0, 64: 95.0}.get(nominal_diameter)",
+      "depends_on": ["nominal_diameter"],
+      "standard_reference": "ISO_4032",
+      "description": "Width across flats"
+    },
+    {
+      "name": "nut_height",
+      "required": false,
+      "data_type": "float",
+      "unit": "mm",
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "formula",
+      "formula": "{'regular': {1.6: 1.3, 2: 1.6, 2.5: 2.0, 3: 2.4, 4: 3.2, 5: 4.0, 6: 5.0, 8: 6.5, 10: 8.0, 12: 10.0, 14: 11.0, 16: 13.0, 20: 16.0, 24: 19.0, 30: 24.0, 36: 29.0, 42: 34.0, 48: 38.0, 56: 45.0, 64: 51.0}, 'thin': {1.6: 0.8, 2: 1.0, 2.5: 1.2, 3: 1.5, 4: 2.0, 5: 2.5, 6: 3.0, 8: 4.0, 10: 5.0, 12: 6.0, 14: 7.0, 16: 8.0, 20: 10.0, 24: 12.0, 30: 15.0, 36: 18.0, 42: 21.0, 48: 24.0, 56: 28.0, 64: 32.0}, 'thick': {1.6: 2.0, 2: 2.4, 2.5: 3.0, 3: 3.6, 4: 4.8, 5: 6.0, 6: 7.2, 8: 9.6, 10: 12.0, 12: 14.4, 14: 16.8, 16: 19.2, 20: 24.0, 24: 28.8, 30: 36.0, 36: 43.2, 42: 50.4, 48: 57.6, 56: 67.2, 64: 76.8}, 'nyloc': {1.6: 2.2, 2: 2.6, 2.5: 3.2, 3: 3.8, 4: 5.0, 5: 6.2, 6: 7.5, 8: 10.0, 10: 12.5, 12: 15.0, 14: 17.5, 16: 20.0, 20: 25.0, 24: 30.0, 30: 37.5, 36: 45.0, 42: 52.5, 48: 60.0, 56: 70.0, 64: 80.0}, 'castle': {1.6: 2.4, 2: 2.8, 2.5: 3.5, 3: 4.2, 4: 5.6, 5: 7.0, 6: 8.4, 8: 11.2, 10: 14.0, 12: 16.8, 14: 19.6, 16: 22.4, 20: 28.0, 24: 33.6, 30: 42.0, 36: 50.4, 42: 58.8, 48: 67.2, 56: 78.4, 64: 89.6}}.get(nut_style, {}).get(nominal_diameter)",
+      "depends_on": ["nominal_diameter", "nut_style"],
+      "standard_reference": "ISO_4032",
+      "description": "Nut height"
+    },
+    {
+      "name": "finish",
+      "required": false,
+      "data_type": "string",
+      "unit": null,
+      "min_value": null,
+      "max_value": null,
+      "default_resolvable": true,
+      "resolution_method": "standards_default",
+      "default_value": "plain",
+      "allowed_values": ["plain", "zinc_plated", "hot_dip_galvanized", "black_oxide"],
+      "depends_on": [],
+      "standard_reference": "ISO_4042",
+      "description": "Surface finish"
+    }
+  ],
+  "conflict_rules": [
+    {
+      "rule": "non_standard_diameter",
+      "condition": "nominal_diameter not in [1.6,2,2.5,3,4,5,6,8,10,12,14,16,20,24,30,36,42,48,56,64]",
+      "severity": "warning",
+      "message": "Non-standard diameter. Verify availability."
+    }
+  ]
+}
